@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2022-07-20" />
+<meta name="date" content="2022-08-22" />
 
 <title>Introduction to amapro</title>
 
@@ -332,16 +332,16 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">Introduction to amapro</h1>
-<h4 class="date">2022-07-20</h4>
+<h4 class="date">2022-08-22</h4>
 
 
 
-<p>We welcome AMap JavaScript library into the world of R. AMap is an
+<p>We welcome JavaScript library AMap into the world of R. AMap is an
 advanced mapping library made in China and widely used there. It
 features 2D/3D animation, supports a multitude of layers and markers,
-data import, flyover playback, etc. <br /> Library <em>amapro</em> let
-you control AMap from R and Shiny. It uses AMap’s native commands and
-parameters wrapped in a few commands of its own.</p>
+data import, flyover playback, etc. <br> Library <em>amapro</em> let you
+control AMap from R and Shiny. It uses AMap’s native commands/parameters
+wrapped in its own few commands.</p>
 <div id="translation" class="section level1">
 <h1>Translation</h1>
 <p>AMap’s documentation is in Chinese and most links here make reference
@@ -353,9 +353,9 @@ translate</a>.</p>
 </div>
 <div id="installation" class="section level1">
 <h1>Installation</h1>
-<!-- Install **amapro** from CRAN with    <br>   
-``` install.packages("amapro") ``` <br> -->
-<p>Install <strong>amapro</strong> from Github with <br>
+<p>Install <strong>amapro</strong> from CRAN with <br><br />
+<code>install.packages(&quot;amapro&quot;)</code> <br> Install
+<strong>amapro</strong> from Github with <br>
 <code>remotes::install_github(&quot;helgasoft/amapro&quot;)</code> <br> Then run
 the following R commands <br> <code>library(amapro); am.init()</code>
 <br> A pop-up dialog will ask for an API key (shows once, will not be
@@ -419,8 +419,7 @@ documentation</li>
 <ul>
 <li><strong>set</strong> - create new item
 <ul>
-<li>with <em>name</em>: add new global JS object
-(<em>window.<name></em>) outside the map <br>
+<li>with <em>name</em>: add new global JS object outside the map <br>
 <code>am.cmd(&#39;set&#39;, &#39;VectorLayer&#39;, name=&#39;e$layer1&#39;)</code></li>
 <li>without <em>name</em>: add new item to map <br>
 <code>am.cmd(&#39;set&#39;, &#39;e$marker1&#39;, position= c(116.478, 39.998))</code></li>
