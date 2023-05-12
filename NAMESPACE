@@ -3,6 +3,7 @@
 export(am.cmd)
 export(am.control)
 export(am.init)
+export(am.inspect)
 export(am.item)
 export(am.output)
 export(am.proxy)

@@ -82,8 +82,7 @@ ul {
   margin: 0;
   padding: 3px;
   overflow: hidden;
-  background-color: #ddd; opacity: 0.7;
-}
+  background-color: #ddd; opacity: 0.7; }
 li { color: #092b36; opacity: 0.9;}
 li:hover {  background-color: #eee; }
 label{ float:left; }
@@ -100,32 +99,33 @@ ui = fluidPage(
   
   fluidRow(column(12, align= "center", 'amapro demo')),
   fluidRow(
-    column(12, div(style='margin-bottom:15px;', am.output("plot", height='600px')) )),
+    column(12, div(style= 'margin-bottom:15px;', 
+                   am.output("plot", height='70vh')) )),
   fluidRow(
-    column(2, checkboxInput('isIcon', 'Replace Icon', value=FALSE)),
-    column(2, checkboxInput("isMarks", "Marks", value=FALSE)),
+    column(1, checkboxInput('isIcon', 'Icon', value=FALSE)),
+    column(1, checkboxInput("isMarks", "Marks", value=FALSE)),
     column(2, checkboxInput('isHeat', 'Heatmap', value=FALSE)),
     column(2, checkboxInput('isCar', 'Start/Stop Car', value=FALSE)),
-    column(3, checkboxInput('isLoLay', 'Loca 3D', value=FALSE), " + ",
-              actionButton('btnFly', '\U1F985 Flyover', title='\u2714 3D to enable, pan map to restart'))
+    column(1, checkboxInput('isLoLay', 'Loca 3D', value=FALSE)),
+    column(4, '+ ',actionButton('btnFly', '\U1F985 Flyover', title='\u2714 3D to enable, pan map to restart'))
   ),
   fluidRow(
-    column(2, HTML("<b>Layers</b>")),
-    column(2, checkboxInput('isTile', 'Base', value=FALSE)),
+    column(1, HTML("<b>Layers</b>")),
+    column(1, checkboxInput('isTile', 'Base', value=FALSE)),
     column(2, checkboxInput('isWms', 'WMS', value=FALSE)),
     column(2, checkboxInput('isOver', 'Overay', value=FALSE))
   ),
   fluidRow(
-    column(7, HTML("Use <b>mouse</b> to "), 
+    column(5, HTML("Use <b>mouse</b> to "), 
            #div( style="display: inline; padding-left:50px;"),
            actionButton("isCircles", "Draw"), " multiple circles, then ", 
            actionButton("isCstop", "Remove All")),
-    column(5, div("\u25BA Right-click map for context menu"),
-              div("\u25BA Hover over the red polygon for tooltip") )),
+    column(6, div("\u25BA Right-click map for context menu"),
+              div("\u25BA Hover above red polygon for tooltip") )),
   fluidRow(
-    column(3, textInput('getsom',getcmd, value='getCenter', width='200px', placeholder='get command for map')),
+    column(2, textInput('getsom',getcmd, value='getCenter', width='200px', placeholder='get command for map')),
     column(1, br(), actionButton("goLL", "Run")),
-    column(3, br(), div( style="display: inline; padding-left:30px;"),
+    column(2, br(), div( style="display: inline; padding-left:30px;"),
            actionButton("getit", "GetLayers") ),
     column(2, br(), actionButton("info", label=tags$img(src ="https://img.icons8.com/metro/2x/info.png", alt='Help', width= '30')) ) ),
   fluidRow( column(12, textOutput('out1')  ))
@@ -170,7 +170,7 @@ server = function(input, output, session){
     ) |>
     
     am.item('Text', name='gjText', 
-            text='GeoJSON', position= glnglat[[1]], #c(2.289799, 48.860950),
+            text='GeoJSON', position= glnglat[[1]], offset= c(5,10),
             style=list(color='yellow', `background-color`='transparent',
                        `font-size`='20px', `border-width`=0 ) ) |>
     am.item('GeoJSON', name= 'mygjson', geoJSON= gjson,
@@ -211,15 +211,15 @@ server = function(input, output, session){
     # am.cmd('set', 'Container') - Loca.Container is set by  am.init(loca=TRUE)
     # am.cmd('viewControl.addAnimates', 'm$loca', 'm$tmp') |>  # but m$loca not instantiated yet
     am.cmd('set', 'GeoJSONSource', name='m$geoPulse', data= pfl) |>
-    am.cmd('set', 'GeoJSONSource', name='m$geo', url= geoJson3D) |>
-    am.cmd('set', 'PolygonLayer', name='m$lpl', opacity=0, # hide it
-           shininess= 10, hasSide= TRUE, cullface='back', depth= TRUE) |>
-    # use setSource before setStyle, otherwise "Cannot read property 'getDataset' of undefined"
-    am.cmd('setSource', 'm$lpl', 'm$geo') |>
-    am.cmd('setStyle', 'm$lpl', topColor='#555', sideColor= '#555', height= "function(index, feature) {
-      heit = feature.properties.height ? feature.properties.height : 1;
-      return heit;
-    }")
+    am.cmd('set', 'GeoJSONSource', name='m$geo', url= geoJson3D) #|>
+    # am.cmd('set', 'PolygonLayer', name='m$lpl', opacity=0, # hide it
+    #        shininess= 10, hasSide= TRUE, cullface='back', depth= TRUE) |>
+    # # use setSource before setStyle, otherwise "Cannot read property 'getDataset' of undefined"
+    # am.cmd('setSource', 'm$lpl', 'm$geo') |>
+    # am.cmd('setStyle', 'm$lpl', topColor='#555', sideColor= '#555', height= "function(index, feature) {
+    #   heit = feature.properties.height ? feature.properties.height : 1;
+    #   return heit;
+    # }")
   })
   
   observeEvent(input$isMarks, {
@@ -265,19 +265,19 @@ server = function(input, output, session){
         context.lineWidth = 2;"
       jdraw <- "var radius = 0;
         var draw = function () {
-          context = m$jcanvas.getContext('2d');
-            context.clearRect(0, 0, 200, 200)
-            context.globalAlpha = (context.globalAlpha - 0.01 + 1) % 1;
-            radius = (radius + 1) % 100;
+          if (m$jcanvas==undefined) return;
+          context = m$jcanvas.getContext('2d', {willReadFrequently: true});
+          context.clearRect(0, 0, 200, 200)
+          context.globalAlpha = (context.globalAlpha - 0.01 + 1) % 1;
+          radius = (radius + 1) % 100;
 
-            context.beginPath();
-            context.arc(100, 100, radius, 0, 2 * Math.PI);
-            context.fill();
-            context.stroke();
+          context.beginPath();
+          context.arc(100, 100, radius, 0, 2 * Math.PI);
+          context.fill();
+          context.stroke();
+          m$CanvasLayer.reFresh();
 
-            m$CanvasLayer.reFresh();
-
-            AMap.Util.requestAnimFrame(draw);
+          AMap.Util.requestAnimFrame(draw);
         }; draw();"
       # execute jcanvas before and jdraw after adding layer to map
       am.cmd(p, 'code', jcanvas)
@@ -328,6 +328,7 @@ server = function(input, output, session){
       am.cmd(p, 'remove', 'm$pll')
       am.cmd(p, 'clear', 'm$mmarks')
       am.cmd(p, 'close', 'm$iwin')
+      am.cmd(p, 'code', "m$jcanvas=null;")
       
       # am.cmd(p, 'animate.stop', 'm$loca')
       # am.cmd(p, 'remove', 'm$puls')
@@ -456,17 +457,26 @@ server = function(input, output, session){
   })
   
   observeEvent(input$result1, {
-    output$out1 <- renderText({ input$result1 }) 
+    output$out1 <- renderPrint({ input$result1 }) 
   })
   
   observeEvent(input$isLoLay, {
     if (isolate(!rv$isLoaded)) return()
+    p <- am.proxy("plot")
     if (input$isLoLay) {
-      p <- am.proxy("plot")
-      am.cmd(p, 'setOpacity', 'm$lpl', 1)
+    #  am.cmd(p, 'setOpacity', 'm$lpl', 1)   # was ok w old loca.js
+      am.cmd(p, 'set', 'PolygonLayer', name='m$lpl') #, #opacity=0, # hide it
+      #       shininess= 10, hasSide= TRUE, cullface='back', depth= TRUE)
+      # use setSource before setStyle, otherwise "Cannot read property 'getDataset' of undefined"
+      am.cmd(p, 'setSource', 'm$lpl', 'm$geo')
+      am.cmd(p, 'setStyle', 'm$lpl', topColor='#555', sideColor= '#555', height= "function(index, feature) {
+        heit = feature.properties.height ? feature.properties.height : 1;
+        return heit;
+      }")
+      
     } else {
-      p <- am.proxy("plot")
-      am.cmd(p, 'setOpacity', 'm$lpl', 0)
+    #  am.cmd(p, 'setOpacity', 'm$lpl', 0)
+      am.cmd(p, 'remove', 'm$lpl')
     }
   })
   
@@ -510,4 +520,4 @@ server = function(input, output, session){
   
 }   # end server
 
-shinyApp(ui = ui, server = server)
+shinyApp(ui = ui, server = server, options= list(launch.browser= TRUE))
