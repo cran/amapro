@@ -4,7 +4,7 @@
 [![size](https://img.shields.io/github/languages/code-size/helgasoft/amapro)](https://github.com/helgasoft/amapro/releases/)
 [![website](https://img.shields.io/badge/Website-Visit-blue)](https://helgasoft.github.io/amapro/)
 <!--
-[![Coveralls test coverage](https://coveralls.io/repos/github/helgasoft/amapro/badge.svg)](https://coveralls.io/r/helgasoft/echarty?branch=main)
+[![Coveralls test coverage](https://coveralls.io/repos/github/helgasoft/amapro/badge.svg)](https://coveralls.io/r/helgasoft/amapro?branch=main)
 -->
 <!-- badges: end -->
 <!--
@@ -12,7 +12,7 @@
 -->
 
 A thin R wrapper around Javascript library
-[AMap](https://lbs.amap.com/demo/list/jsapi-v2) and its 3D plugin Loca.  
+[AMap](https://lbs.amap.com/demo/list/jsapi-v2) and its 3D plugin [Loca](https://lbs.amap.com/demo/loca-v2/demos/).  
 API has eight(8) commands to enclose all AMap and Loca v.2.0 native commands and parameters.  
 Features easy transition 2D to/from 3D, variety of markers and layers, geoJson import, map manual drawing, dynamic 3D effects like flyover and trace animation, and more. <br/>
 Enjoy rich interactive maps in R and Shiny with minimal overhead!

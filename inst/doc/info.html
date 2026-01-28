@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2023-05-11" />
+<meta name="date" content="2026-01-27" />
 
 <title>Introduction to amapro</title>
 
@@ -49,6 +49,7 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -338,7 +339,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">Introduction to amapro</h1>
-<h4 class="date">2023-05-11</h4>
+<h4 class="date">2026-01-27</h4>
 
 
 
@@ -395,8 +396,10 @@ auto-translates as “Reference book” in web menus.</p>
 <ul>
 <li><a href="https://lbs.amap.com/api/jsapi-v2/summary/">Summary</a></li>
 <li><a href="https://lbs.amap.com/api/jsapi-v2/guide/abc/quickstart">Guide</a></li>
-<li><a href="https://a.amap.com/jsapi/static/doc/index.html">API</a>
-documentation, good auto-translation</li>
+<li><a href="https://lbs.amap.com/api/javascript-api-v2/documentation">API
+CN</a> documentation, good auto-translation</li>
+<li><a href="https://a.amap.com/jsapi/static/doc/index.html">API EN</a>
+documentation in English, not recent/complete</li>
 <li><a href="https://lbs.amap.com/demo/list/jsapi-v2">Examples</a> -
 live demos</li>
 </ul>
@@ -410,6 +413,8 @@ documentation auto-translates well in the browser.</p>
 <li><a href="https://lbs.amap.com/api/loca-v2/intro">Intro</a></li>
 <li><a href="https://a.amap.com/Loca/static/loca-v2/doc/html/index.html">API</a>
 documentation</li>
+<li><a href="https://lbs.amap.com/demo/loca-v2/demos/">Examples</a> -
+live demos</li>
 </ul>
 </div>
 </div>
@@ -436,8 +441,8 @@ name <br> <code>am.cmd(&#39;addTo&#39;, &#39;e$layer1&#39;, &#39;e$marker1&#39;)
 <li><strong>code</strong> - execute JavaScript code <br>
 <code>am.cmd(&#39;code&#39;, &#39;alert(&quot;I am JS&quot;);&#39;)</code></li>
 </ul>
-<p>AMap commands starting with <strong>get</strong> return data from the
-map or related objects. <br> Put the data in a Shiny input variable by
+<p>AMap commands starting with ‘<strong>get</strong>’ return data from
+the map or related objects. Put the data in a Shiny input variable by
 setting its name in parameter <strong>r</strong>. <br> Example:
 <code>am.cmd(&#39;getCenter&#39;, &#39;map&#39;, r=&#39;inShiny1&#39;)</code> <br> Above command
 will update <em>input$inShiny1</em> with the Lng/Lat coordinates of the
@@ -452,9 +457,9 @@ as a list of lists. Each event is a separate list with event name in
 <strong>e</strong>, a JS function <strong>f</strong> and optionally a
 query <strong>q</strong>.<br />
 Example:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">am.init</span>(<span class="at">center=</span> <span class="fu">c</span>(<span class="fl">116.475</span>, <span class="fl">39.997</span>), <span class="at">zoom=</span> <span class="dv">17</span>,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">on=</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">e=</span> <span class="st">&#39;complete&#39;</span>, </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">f=</span> <span class="st">&quot;function() {alert(&#39;loaded!&#39;);}&quot;</span>)) )</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">am.init</span>(<span class="at">center=</span> <span class="fu">c</span>(<span class="fl">116.475</span>, <span class="fl">39.997</span>), <span class="at">zoom=</span> <span class="dv">17</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>        <span class="at">on=</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">e=</span> <span class="st">&#39;complete&#39;</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>                      <span class="at">f=</span> <span class="st">&quot;function() {alert(&#39;loaded!&#39;);}&quot;</span>)) )</span></code></pre></div>
 <p>on/off events without <em>name</em> are ignored, except for the map
 itself (as above example). <br> JavaScript function
 <em>Shiny.setInputValue()</em> can be used to send data back to
@@ -467,8 +472,6 @@ Shiny.</p>
 global called ‘m$jmap’.</li>
 <li>AMap command <a href="https://a.amap.com/jsapi/static/doc/index.html#controladdto">addTo</a>
 is overwritten by <em>amapro</em> and cannot be used.</li>
-<li>the <strong>supported AMap plugins</strong> are: ControlBar, Scale,
-ToolBar, MoveAnimation, MouseTool, HeatMap, GeoJSON, ElasticMarker.</li>
 <li>most <strong>built-in</strong> AMap tile layers (Satellite, Traffic,
 Roads) are limited to China only. However, with command
 <em>am.item(‘TileLayer’)</em>, one can use any <a href="https://leaflet-extras.github.io/leaflet-providers/preview/">Leaflet
@@ -478,8 +481,10 @@ layers</a> are <a href="https://en.wikipedia.org/wiki/Restrictions_on_geographic
 coded</a> and coordinates collected on them will display incorrectly in
 Leaflet or other WGS-84 based maps, and vice-versa. They need to be <a href="https://lbs.amap.com/api/jsapi-v2/guide/transform/convertfrom">converted</a>.
 Conversion is available through function <a href="https://lbs.amap.com/api/jsapi-v2/documentation#convertfrom">convertFrom</a>.</li>
-<li>AMap ecosystem is vast, <strong>unsupported features</strong>
-include: ‘BesizerCurve’, ‘MarkerCluster’, ‘HawkEye’, <a href="https://lbs.amap.com/demo/javascript-api/example/indoormap/indoormap/">IndoorMap</a>,
+<li>the <strong>supported AMap plugins</strong> are: ControlBar, Scale,
+ToolBar, MoveAnimation, MouseTool, HeatMap, GeoJSON, ElasticMarker.</li>
+<li>AMap ecosystem is vast, <strong>unsupported</strong> features and
+plugins include: ‘BesizerCurve’, ‘MarkerCluster’, ‘HawkEye’, <a href="https://lbs.amap.com/demo/javascript-api/example/indoormap/indoormap/">IndoorMap</a>,
 <a href="https://lbs.amap.com/demo/javascript-api/example/selflayer/cus-svg">CustomLayer</a>,
 ‘GLCustomLayer’, ‘DistrictLayer’, ‘LayerGroup’, all editors like
 ‘PolygonEditor’,‘Webservice’, ‘Search(AMap.Autocomplete,
@@ -489,9 +494,8 @@ services(weather, districts, etc.), positioning, utilities.</li>
 been tested. Latest <em>AmbientLight</em>, <em>DirectionalLight</em> and
 <em>PointLight</em> objects are not supported, but parameters
 <em>ambLight</em>, <em>dirLight</em> and <em>pointLight</em> accomplish
-the same. Loca events are not supported yet.</li>
-<li><em>loca.js</em> file has several versions, the latest (bigger) one
-does not work well with the current <em>amap.js</em></li>
+the same.</li>
+<li>Loca events are not supported yet.</li>
 </ul>
 </div>
 <div id="tips" class="section level1">
@@ -504,7 +508,7 @@ variables.</p></li>
 <li><p>API attributes could be set to a JS function instead of a value.
 Function is defined as a string starting with word “function”.</p></li>
 <li><p>usually WMS/WMTS tiles come from external servers and may present
-a CORS problem - browser refusal to load. One can install a small <a href="https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf">extension
+a CORS problem - browser refusal to load. One can install a small <a href="https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf">extension
 in Chrome</a> or <a href="https://addons.mozilla.org/en-US/firefox/addon/access-control-allow-origin/">Firefox</a>
 to fix this problem manually inside the browser.</p></li>
 <li><p>AMap has several predefined <a href="https://lbs.amap.com/api/jsapi-v2/guide/map/map-style/">Map
@@ -512,6 +516,8 @@ styles</a>. Could be set in map options with <em>mapStyle</em>.</p></li>
 <li><p><em>amapro</em> silent errors are collected in the browser
 Console. Press key <strong>F12</strong> to open the dev.environment,
 then open tab “Console” to view them.</p></li>
+<li><p><em>am.init</em> has a <em>debug</em> (boolean) parameter,
+results are displayed in the browser Console</p></li>
 <li><p>Chrome/Firefox extensions may interfere with map presentation
 (like ‘uBlock’)</p></li>
 </ul>
